@@ -1,0 +1,62 @@
+# IDEs and editors
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+ENV/
+env/
+
+# Java / Maven
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Node
+node_modules/
+frontend/node_modules/
+/dist
+/build
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Audio / models / large assets
+audio_storage/
+piper/models/
+piper/libtashkeel_model.ort
+*.onnx
+*.onnx.json
+
+# Exported archives
+*.zip
+*.tar.gz
+
+# Sensitive / local config
+.env
+*.pem
+*.key
+
+# IntelliJ
+out/
+
+# Misc
+coverage/
+coverage-report/
+
+# End of file
