@@ -30,20 +30,6 @@ Interfaces for database CRUD operations (extends `JpaRepository`).
 ---
 
 
----
-
-Perfect 👍
-Below is a **clear, end-to-end AI Interview System flow**, written in **simple language**, and **explicitly mentioning the technologies you used** (Whisper, Piper, local LLM, Spring Boot, React).
-
-You can use this for:
-
-* Project explanation
-* README
-* Viva / interview explanation
-* Architecture diagram reference
-
----
-
 # 🧠 AI-POWERED INTERVIEW SYSTEM – COMPLETE FLOW
 
 
