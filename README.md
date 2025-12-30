@@ -263,7 +263,6 @@ React UI
 # 🏆 WHY THIS DESIGN IS STRONG
 
 ✔ Fully local (no quota limits)
-✔ No paid APIs
 ✔ Fast response
 ✔ Scalable
 ✔ Real interview experience
