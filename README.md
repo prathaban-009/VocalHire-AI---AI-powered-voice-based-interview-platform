@@ -29,37 +29,259 @@ Interfaces for database CRUD operations (extends `JpaRepository`).
 
 ---
 
-## 🚀 How to Run
-
-### Prerequisites
-*   Java 17+
-*   Node.js 16+
-*   Python 3.8+ (with `openai-whisper`, `piper-tts` dependencies)
-
-### Backend (Spring Boot)
-1.  Configure your Gemini API Key in `src/main/resources/application.properties` (or use environment variables).
-    ```properties
-    gemini.api.key=YOUR_API_KEY
-    ```
-2.  Run the application:
-    ```bash
-    ./mvnw.cmd spring-boot:run
-    ```
-    (Runs on `localhost:8080`)
-
-### Frontend (React)
-1.  Navigate to `frontend/`.
-2.  Install dependencies: `npm install`.
-3.  Start the dev server:
-    ```bash
-    npm start
-    ```
-    (Accessible at `localhost:3000`)
 
 ---
 
-## 🛠 Features
-*   **Resume Parsing**: Automatically tailors questions to the candidate's experience.
-*   **Voice Interaction**: Full-duplex voice interview (TTS questions, STT answers).
-*   **AI Evaluation**: Real-time scoring and feedback from Gemini.
-*   **Audio Archives**: Sessions are recorded and stored in `audio_storage/{candidate}_{session}/`.
+Perfect 👍
+Below is a **clear, end-to-end AI Interview System flow**, written in **simple language**, and **explicitly mentioning the technologies you used** (Whisper, Piper, local LLM, Spring Boot, React).
+
+You can use this for:
+
+* Project explanation
+* README
+* Viva / interview explanation
+* Architecture diagram reference
+
+---
+
+# 🧠 AI-POWERED INTERVIEW SYSTEM – COMPLETE FLOW
+
+
+
+To conduct a **real-time AI-driven technical interview** where:
+
+* Questions are asked via **human-like voice**
+* Candidate answers via **speech**
+* Answers are **evaluated automatically**
+* Scores are generated **without human intervention**
+
+---
+
+## 🏗️ TECHNOLOGY STACK USED
+
+### 🔹 Backend
+
+* **Spring Boot (Java)** – Core interview logic & APIs
+* **MySQL** – Store HR requirements, questions, answers, scores
+
+### 🔹 AI / ML
+
+* **Whisper (faster-whisper)** – Speech → Text (STT)
+* **Piper TTS** – Text → Speech (TTS)
+* **Mistral 7B (via Ollama)** – Gemini alternative (LLM)
+
+### 🔹 Frontend
+
+* **React.js** – UI, mic input, audio playback
+
+### 🔹 Communication
+
+* **REST APIs**
+* **Local process execution** (Python & CLI tools)
+
+---
+
+
+
+---
+
+## 🟢 PHASE 1: HR SETUP
+
+### 1️⃣ HR logs in
+
+* HR creates **job role**
+* HR sets **required skills**
+* HR defines difficulty mix
+
+📌 Stored in MySQL
+
+---
+
+## 🟢 PHASE 2: CANDIDATE REGISTRATION
+
+### 2️⃣ Candidate uploads resume
+
+* Spring Boot parses resume (PDF/DOC)
+* Extracted text is stored
+
+---
+
+## 🟢 PHASE 3: QUESTION GENERATION (ONE-TIME)
+
+### 3️⃣ Local LLM generates interview questions
+
+* **Mistral 7B (Ollama)** is used instead of Gemini
+* Generates:
+
+  * 3 EASY
+  * 4 MEDIUM
+  * 2 HARD questions
+* Questions are stored in DB
+
+📌 This happens **once per interview**
+
+---
+
+## 🟢 PHASE 4: INTERVIEW START
+
+### 4️⃣ Candidate clicks “Start Interview”
+
+Spring Boot:
+
+* Creates `InterviewSession`
+* Starts **30-minute timer**
+* Selects first EASY question
+
+---
+
+## 🟢 PHASE 5: QUESTION → VOICE (TEXT TO SPEECH)
+
+### 5️⃣ Question is spoken to candidate
+
+* Spring Boot sends question text to **Piper**
+* Piper converts **Text → WAV audio**
+* Audio is sent to frontend
+* Frontend plays interviewer voice 🎙️
+
+📌 Technology:
+
+```
+Spring Boot → Piper TTS → Audio
+```
+
+---
+
+## 🟢 PHASE 6: ANSWER → TEXT (SPEECH TO TEXT)
+
+### 6️⃣ Candidate answers via microphone
+
+* Frontend records audio
+* Audio sent to backend
+* Backend invokes **Whisper**
+* Whisper converts **Speech → Text**
+
+📌 Technology:
+
+```
+Audio → Whisper → Text
+```
+
+---
+
+## 🟢 PHASE 7: CONFUSION HANDLING
+
+### 7️⃣ If candidate says:
+
+* “I don’t understand”
+* “Repeat the question”
+
+Spring Boot:
+
+* Calls **Mistral**
+* Rephrases question politely
+* Piper speaks the simplified question again
+
+📌 Max repeat = **2 times**
+
+---
+
+## 🟢 PHASE 8: ANSWER EVALUATION
+
+### 8️⃣ Answer is evaluated
+
+* Spring Boot sends:
+
+  * Question
+  * Candidate answer
+* To **Mistral 7B**
+* Mistral returns:
+
+```json
+{
+  "score": 1–10,
+  "feedback": "Short evaluation"
+}
+```
+
+📌 Stored in MySQL
+
+---
+
+## 🟢 PHASE 9: NEXT QUESTION SELECTION
+
+### 9️⃣ Backend decides next step
+
+Rules:
+
+* EASY → MEDIUM → HARD
+* Never repeat same question > 2 times
+* Stop if 30 minutes exceeded
+
+Loop continues until:
+
+* All questions asked OR
+* Time runs out
+
+---
+
+## 🟢 PHASE 10: INTERVIEW END
+
+### 🔟 Interview ends
+
+Spring Boot:
+
+* Calculates final score
+* Generates summary
+* Stores results
+
+Frontend:
+
+* Displays performance report
+
+---
+
+# 🧠 OVERALL SYSTEM FLOW (ONE-LINE)
+
+```
+HR → Resume → Questions → Voice → Answer → Evaluation → Score
+```
+
+---
+
+# 🔁 TECH FLOW DIAGRAM (TEXTUAL)
+
+```
+React UI
+   ↓ (audio)
+Spring Boot
+   ↓
+Whisper (STT)
+   ↓
+Text Answer
+   ↓
+Mistral (Evaluation)
+   ↓
+Score
+   ↓
+Spring Boot
+   ↓
+Piper (TTS)
+   ↓
+Voice Question
+   ↓
+React UI
+```
+
+---
+
+# 🏆 WHY THIS DESIGN IS STRONG
+
+✔ Fully local (no quota limits)
+✔ No paid APIs
+✔ Fast response
+✔ Scalable
+✔ Real interview experience
+✔ Production-ready architecture
+
+---
+
